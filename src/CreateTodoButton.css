@@ -1,0 +1,7 @@
+.create-todo__button {
+  border : 0;
+  border-radius: 10px;
+  background-color: #233553;
+  color: aliceblue;
+  padding: 12px 24px;
+}
