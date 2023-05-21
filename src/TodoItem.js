@@ -1,17 +1,21 @@
 import './TodoItem.css'
-import {BsCheckCircle} from 'react-icons/bs'
-import { BsXCircle } from 'react-icons/bs'
+import { TodoIcon } from './TodoIcon'
 function TodoItem(props) {
   return (
     <li className="TodoItem">
-      <span
+      {/* <span
         className={`Icon Icon-check ${
           props.completed ? 'Icon-check--active' : ''
         }`}
         onClick={props.onComplete}
       >
         <BsCheckCircle/>
-      </span>
+      </span> */}
+      <TodoIcon
+        type="check"
+        completed={props.completed}
+        onComplete={props.onComplete}
+      />
       <p
         className={`TodoItem-p ${
           props.completed && 'TodoItem-p--complete'
@@ -19,13 +23,16 @@ function TodoItem(props) {
       >
         {props.text}
       </p>
-      <span
+      {/* <span
         className="Icon Icon-delete"
         onClick={props.onDelete}
       >
         <BsXCircle/>
-      </span>
-      
+      </span> */}
+      <TodoIcon
+        type='delete'
+        onDelete={props.onDelete}
+      />
     </li>
   )
 }
