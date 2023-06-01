@@ -1,30 +1,17 @@
 import React from 'react'
-import { TodoCounter } from './TodoCounter'
-import { TodoFilter } from './TodoFilter'
-import { TodoList } from './TodoList'
-import { TodoItem } from './TodoItem'
-import { CreateTodoButton } from './CreateTodoButton'
+import { TodoCounter } from '../TodoCounter'
+import { TodoFilter } from '../TodoFilter'
+import { TodoList } from '../TodoList'
+import { TodoItem } from '../TodoItem'
+import { CreateTodoButton } from '../CreateTodoButton'
+import { useLocalStorage } from './useLocalStorage'
+
 
 function App() {
-  const localStorageTodos = localStorage.getItem('TODOS_V1')
-  let parsedTodos 
-  if (!localStorageTodos){
-    localStorage.setItem('TODOS_V1)',JSON.stringify([]))
-    parsedTodos = []
 
-  }
-  else
-  {
-    parsedTodos= JSON.parse(localStorageTodos)
-  }
-  console.log(parsedTodos)
-  const [todos, setTodos] = React.useState(parsedTodos)
+  const [todos, saveTodos] = useLocalStorage('TODOS_V1',[])
   const [searchValue, setSearchValue] = React.useState('')
 
-  const saveTodos = (newTodos) => {
-    localStorage.setItem('TODOS_V1', JSON.stringify(newTodos))
-    setTodos(newTodos)
-  }
 
   const completedTodos =
     todos.filter((todo) => !!todo.completed === true).length // !! is used to be sure to.completed is a boolean value

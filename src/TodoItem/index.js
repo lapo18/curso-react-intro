@@ -1,5 +1,5 @@
 import './TodoItem.css'
-import { TodoIcon } from './TodoIcon'
+import { TodoIcon } from '../TodoIcon'
 function TodoItem(props) {
   return (
     <li className="TodoItem">
