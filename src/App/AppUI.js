@@ -3,34 +3,49 @@ import { TodoCounter } from '../TodoCounter'
 import { TodoFilter } from '../TodoFilter'
 import { TodoList } from '../TodoList'
 import { TodoItem } from '../TodoItem'
+import { TodosLoading } from '../TodosLoading'
+import { TodosError } from '../TodosError'
+import { EmptyTodos } from '../EmptyTodos'
 import { CreateTodoButton } from '../CreateTodoButton'
-function AppUI({completedTodos,
-  totalTodos,
-  searchValue,
-  setSearchValue,
-  searchedTodos,
-  handleOnCompleted,
-  handleOnDeleted
-}){
+import { TodoContext } from "../TodoContext"
+
+function AppUI(){
   return (
     <React.Fragment>
-      <TodoCounter completed={completedTodos} total={totalTodos} />
-      <TodoFilter
-        searchValue={searchValue}
-        setSearchValue={setSearchValue}
-      />
+      <TodoCounter/>
+      <TodoFilter/>
 
-      <TodoList>
-        {searchedTodos.map((todo) => (
-          <TodoItem
-            key={todo.text}
-            text={todo.text}
-            completed={todo.completed}
-            onComplete={()=>handleOnCompleted(todo.text)}
-            onDelete={()=>handleOnDeleted(todo.text)}
-            />
-        ))}
-      </TodoList>
+      <TodoContext.Consumer>
+        {(
+          {loading,
+          error,
+          searchedTodos,
+          completeTodo,
+          deleteTodo,}
+        )=>(
+          <TodoList>
+          {loading &&( 
+          <>
+          <TodosLoading/> 
+          <TodosLoading/> 
+          <TodosLoading/>
+          </>) }
+          {error && <TodosError/>}
+          {(!loading && searchedTodos.length === 0) && <EmptyTodos/>}
+          
+          {searchedTodos.map((todo) => (
+            <TodoItem
+              key={todo.text}
+              text={todo.text}
+              completed={todo.completed}
+              onComplete={()=>completeTodo(todo.text)}
+              onDelete={()=>deleteTodo(todo.text)}
+              />
+          ))}
+        </TodoList>
+        )}
+      </TodoContext.Consumer>
+      
 
       <CreateTodoButton />
     </React.Fragment>
